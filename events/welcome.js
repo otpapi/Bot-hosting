@@ -15,7 +15,7 @@ module.exports = (bot) => {
           : "NOT SET";
 
       const text = `
-🌟 **WELCOME** ${user.@first_name}!
+🌟 **WELCOME** @${user.first_name}!
 
 📋 **GROUP**: ${ctx.chat.title}
 
