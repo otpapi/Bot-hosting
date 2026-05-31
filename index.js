@@ -20,6 +20,8 @@ app.listen(PORT, () => {
 require("./commands/start")(bot);
 require("./commands/admin")(bot);
 require("./commands/fun")(bot);
+require("./commands/game")(bot);
+require("./commands/mathquiz")(bot);
 
 // Events
 require("./events/messages")(bot);
