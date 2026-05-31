@@ -15,13 +15,13 @@ module.exports = (bot) => {
           : "NOT SET";
 
       const text = `
-🌟 WELCOME ${user.first_name}!
+🌟 **WELCOME** ${user.@first_name}!
 
-📋 GROUP: ${ctx.chat.title}
+📋 **GROUP**: ${ctx.chat.title}
 
-🆔 YOUR ID: ${user.id}
+🆔 **YOUR ID**: ${user.id}
 
-👤 USERNAME: ${username}
+👤 **USERNAME**: ${username}
 
 🔥 Hope you find good vibes,
 new friends and lots of fun here!
@@ -32,7 +32,7 @@ new friends and lots of fun here!
         Markup.inlineKeyboard([
           [
             Markup.button.url(
-              "➕ ADD ME IN YOUR GROUP",
+              "➕ **ADD ME IN YOUR GROUP**",
               `https://t.me/${ctx.botInfo.username}?startgroup=true`
             )
           ]
@@ -53,13 +53,13 @@ new friends and lots of fun here!
         : "NOT SET";
 
     const text = `
-😢 GOODBYE ${user.first_name}
+😢 **GOODBYE** @${user.first_name}
 
-📋 GROUP: ${ctx.chat.title}
+📋 **GROUP**: ${ctx.chat.title}
 
-🆔 USER ID: ${user.id}
+🆔 **USER ID**: ${user.id}
 
-👤 USERNAME: ${username}
+👤 **USERNAME**:@ ${username}
 
 💔 User left the group.
 
