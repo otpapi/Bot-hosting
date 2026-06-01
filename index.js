@@ -8,7 +8,6 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 // Commands
 require("./commands/start")(bot);
 require("./commands/game")(bot);
-require("./commands/mathquiz")(bot);
 require("./commands/admin")(bot);
 require("./commands/fun")(bot);
 
