@@ -1,28 +1,20 @@
 const { Markup } = require("telegraf");
 
 module.exports = (bot) => {
-
+  // /game command sirf yahan rahega
   bot.command("game", async (ctx) => {
-
-    await ctx.reply(
-`🎮 SUPREME GAME CENTER
-
-━━━━━━━━━━━━━━
-🧠 Math Quiz Challenge
-Test your speed & accuracy
-━━━━━━━━━━━━━━
-
-Choose a game below 👇`,
-      Markup.inlineKeyboard([
-        [
-          Markup.button.callback(
-            "🧠 Start Math Quiz",
-            "start_math_quiz"
-          )
-        ]
-      ])
-    );
-
+    try {
+      await ctx.reply(
+        `🎮 *SUPREME GAME CENTER*\n\n━━━━━━━━━━━━━━\n🧠 *Math Quiz Challenge*\nTest your speed & accuracy\n━━━━━━━━━━━━━━\n\nChoose a game below 👇`,
+        {
+          parse_mode: "Markdown",
+          ...Markup.inlineKeyboard([
+            [Markup.button.callback("🧠 Start Math Quiz", "start_math_quiz")]
+          ])
+        }
+      );
+    } catch (e) {
+      console.error("Game Menu Error:", e);
+    }
   });
-
 };
