@@ -2,83 +2,47 @@ const { Markup } = require("telegraf");
 
 module.exports = (bot) => {
   bot.start(async (ctx) => {
-    // Only work in private chats
+    // Sirf Private Chat mein welcome message dikhaye
     if (ctx.chat.type !== "private") return;
 
-    const userName = ctx.from.first_name || "User";
-    const userId = ctx.from.id;
+    try {
+      // Bot ka username khud nikalne ke liye
+      const botInfo = await bot.telegram.getMe();
+      const botUsername = botInfo.username;
 
-    // Professional UI Message
-    const welcomeMessage = 
+      const welcomeText = 
 `✨ *SUPREME MULTI-FUNCTION BOT* ✨
 ━━━━━━━━━━━━━━━━━━━━━━
-👋 *Swagat hai, ${userName}!*
+👋 *Hello, ${ctx.from.first_name}!*
 
-Main ek powerful bot hoon jo aapki chat ko 
-easy aur mazedaar bana sakta hoon. 
+Main groups ko manage karne aur mazedaar 
+games (Focus Mode ke sath) khelne ke liye 
+banaya gaya hoon.
 
-🚀 *MERE TOP FEATURES:*
-🛡️ *Admin:* Ban, Mute, Kick & more
-🤖 *AI:* Chat with GPT /ask <question>
-🎮 *Games:* Fun games & challenges
-📊 *Stats:* Level, XP & Leaderboard
+🚀 *FEATURES:*
+🎮 *Pro Games:* Math Quiz & more
+🛡️ *Focus Mode:* Anti-disturb protection
+🤖 *AI Chat:* Powerful AI features
 ━━━━━━━━━━━━━━━━━━━━━━
-👇 *Neeche diye gaye buttons use karein:*`;
+Mujhe apne group mein add karne ke liye 
+neeche diye gaye button par click karein! 👇`;
 
-    // Professional Button Layout
-    const buttons = Markup.inlineKeyboard([
-      [
-        Markup.button.callback("🤖 AI Chat", "start_ai"),
-        Markup.button.callback("🎮 Play Games", "start_games_menu")
-      ],
-      [
-        Markup.button.callback("📊 My Stats", "start_stats"),
-        Markup.button.callback("⚙️ Settings", "start_settings")
-      ],
-      [
-        Markup.button.url("📢 Updates Channel", "https://t.me/your_channel") // Apna channel link daalein
-      ]
-    ]);
-
-    // Send Welcome Message with Photo (Optional: replace URL with your image)
-    try {
-      await ctx.replyWithPhoto(
-        "https://i.ibb.co/vzY6pX0/supreme-bot.jpg", // Yahan apni image link daal sakte hain
-        {
-          caption: welcomeMessage,
-          parse_mode: "Markdown",
-          ...buttons
-        }
-      );
-    } catch (e) {
-      // If photo fails, send text only
-      await ctx.reply(welcomeMessage, {
+      await ctx.reply(welcomeText, {
         parse_mode: "Markdown",
-        ...buttons
+        ...Markup.inlineKeyboard([
+          [
+            Markup.button.url(
+              "➕ Add Me to Your Group", 
+              `https://t.me/${botUsername}?startgroup=true`
+            )
+          ],
+          [
+            Markup.button.url("📢 Updates", "https://t.me/your_channel_link") // Optional
+          ]
+        ])
       });
+    } catch (e) {
+      console.error("Start Command Error:", e);
     }
   });
-
-  // --- BUTTON HANDLERS (Alag-Alag bot.action) ---
-
-  bot.action("start_ai", async (ctx) => {
-    await ctx.answerCbQuery();
-    await ctx.reply("🤖 *AI CHAT MODE*\n\n/ask <question> likh kar mujhse kuch bhi puchein!", { parse_mode: "Markdown" });
-  });
-
-  bot.action("start_games_menu", async (ctx) => {
-    await ctx.answerCbQuery();
-    await ctx.reply("🎮 *GAME CENTER*\n\nGames khelne ke liye `/game` command ka use karein!", { parse_mode: "Markdown" });
-  });
-
-  bot.action("start_stats", async (ctx) => {
-    await ctx.answerCbQuery();
-    await ctx.reply("📊 *USER STATS*\n\nLevel: 1\nXP: 100\nRank: Rookie\n\n(Feature coming soon!)", { parse_mode: "Markdown" });
-  });
-
-  bot.action("start_settings", async (ctx) => {
-    await ctx.answerCbQuery();
-    await ctx.reply("⚙️ *BOT SETTINGS*\n\nYahan se aap bot ki settings change kar sakte hain.", { parse_mode: "Markdown" });
-  });
-
 };
