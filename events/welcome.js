@@ -23,14 +23,9 @@ module.exports = (bot) => {
       const mention = `<a href="tg://user?id=${user.id}">${fullName}</a>`;
 
       const text = `
-🎸☠️ ✧Supreme✧ ☠️🎸
-
 🌟 <b>WELCOME</b> ${mention}!
-
 📋 <b>GROUP</b>: ${ctx.chat.title}
-
 🆔 <b>YOUR ID</b>: <code>${user.id}</code>
-
 👤 <b>USERNAME</b>: ${username}
 
 🔥 Hope you find good vibes,
@@ -74,15 +69,11 @@ new friends and lots of fun here!
 
     const text = `
 😢 <b>GOODBYE</b> ${fullName}
-
 📋 <b>GROUP</b>: ${ctx.chat.title}
-
 🆔 <b>USER ID</b>: <code>${user.id}</code>
-
 👤 <b>USERNAME</b>: ${username}
 
 💔 User left the group.
-
 We will miss you!
 `;
 
