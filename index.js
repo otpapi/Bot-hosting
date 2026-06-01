@@ -2,8 +2,16 @@ require("dotenv").config();
 const express = require("express");
 const { Telegraf } = require("telegraf");
 
+// ==========================================
+// 👑 ADMIN CONFIGURATION (YAHAN LAGAO)
+// ==========================================
+global.ownerId = 8661288342; // <-- Yahan APNI Telegram ID daalo (@userinfobot se nikaal kar)
+global.promoAdmins = [8661288342]; // Isme bhi apni ID daalo (Owner hamesha admin rahega)
+// ==========================================
+
 const app = express();
 const bot = new Telegraf(process.env.BOT_TOKEN);
+
 
 // Commands
 require("./commands/start")(bot);
