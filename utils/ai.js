@@ -10,45 +10,69 @@ async function askAI(userId, message) {
 
   try {
 
-    const res = await axios.post(
-      "https://openrouter.ai/api/v1/chat/completions",
+    const history = memory[userId]
+      .map(m => `${m.role}: ${m.content}`)
+      .join("\n");
+
+    const response = await axios.post(
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent",
       {
-        model: "google/gemma-2-9b-it:free",
-        messages: [
+        contents: [
           {
-            role: "system",
-            content: "You are a friendly Hinglish Telegram bot."
-          },
-          ...memory[userId],
-          {
-            role: "user",
-            content: message
+            parts: [
+              {
+                text: `
+You are Supreme AI.
+
+Rules:
+- Reply in natural Hinglish.
+- Funny and friendly.
+- Use emojis naturally 😎😂🔥✨
+- Keep replies short.
+- Talk like a real friend.
+- Never sound robotic.
+
+Chat History:
+${history}
+
+User: ${message}
+`
+              }
+            ]
           }
-        ],
-        max_tokens: 150
+        ]
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`
+          "Content-Type": "application/json",
+          "X-goog-api-key": process.env.GEMINI_API_KEY
         }
       }
     );
 
-    const reply = res.data.choices[0].message.content;
+    const reply =
+      response.data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "😅 Kuch samajh nahi aaya bhai.";
 
     memory[userId].push(
       { role: "user", content: message },
       { role: "assistant", content: reply }
     );
 
-    if (memory[userId].length > 10) {
+    if (memory[userId].length > 20) {
       memory[userId].splice(0, 2);
     }
 
     return reply;
 
-  } catch (e) {
-    return "❌ AI Error";
+  } catch (err) {
+
+    console.error(
+      "Gemini Error:",
+      err.response?.data || err.message
+    );
+
+    return "😵 AI Error";
   }
 }
 
